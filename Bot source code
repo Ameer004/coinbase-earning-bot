@@ -1,0 +1,577 @@
+
+/setup
+
+Libs.Coinbase.setup();
+
+Bot.sendMessage(
+   "Now please go to BB App > Admin Panel and setup Api Keys. Then run /setupCB"
+);
+
+/setupCB
+
+Libs.Coinbase.apiCall({
+  method: "GET",   // method can be GET and POST
+  path: "accounts",
+  onSuccess: "onGetAccounts",
+  onError: "/onApiError"  // onError command
+  // background: true // perform api call in background for big timeout limit
+})
+
+onGetAccounts
+
+var json = options.result;
+
+var accounts = json["data"];
+Bot.setProperty("CB-accounts", accounts, "json");
+
+Bot.sendMessage("Setupped. Total accounts: " + accounts.length)
+
+/onApiError
+
+Bot.sendMessage("We have error with Coinbase API. Please try later. " + options.error)
+
+Bot.sendMessage(options.http_status + " " + JSON.stringify(options.result))
+
+/start
+
+var button = [{ title : "⚜️ Joined ⚜️" , command : "⚜️ Joined ⚜️" }]
+Bot.sendInlineKeyboard(button , "*❄️You mist ahve to Follow Us on Instagram 〽️\n\nhttps://www.instagram.com/tricks_x_tech\n\n🛡 Please  Subscribe To Our Live Transactions Channels : \n\n➡️@TricksXTech \n➡️@Legit_bot_provider\n➡️@WE4YOUYT\n➡️@TXTPayouts \n➡️@EarnWithLegit \n➡️@Tricks_X_Tech\n\n☑️You must subscribe our YouTube channel :- \n\nhttps://www.youtube.com/channel/UCHTtnjalu11sr96APBL93lA \n\nAfter do all the steps click ☑️Joined*")
+function hello(message) {
+  var greetings = ""
+
+  Bot.sendMessage(greetings + message)
+}
+
+function doTouchOwnLink() {
+  Bot.sendMessage("*You're Trying To Invite You're Self ❌*")
+}
+
+function doAttracted(channel) {
+  hello("Referal: " + channel)
+}
+
+function doAtractedByUser(refUser) {
+  hello("")
+  var balance = Libs.ResourcesLib.anotherUserRes("balance", refUser.telegramid)
+ balance.add(0)
+Bot.sendMessageToChatWithId(refUser.chatId, "*🏧 New Referral You Will Get This: +0.00000001 BTC Only When Your Referal Join all The Çhàññéls*");
+}
+
+function doAlreadyAttracted(){
+  Bot.sendMessage("*You Already Started The Bot ❌*");
+}
+
+var trackOptions = {
+  onTouchOwnLink: doTouchOwnLink,
+  onAttracted: doAttracted,
+  onAtractedByUser: doAtractedByUser,
+  onAlreadyAttracted: doAlreadyAttracted
+}
+
+Libs.ReferralLib.currentUser.track(trackOptions);
+
+var status = Libs.ResourcesLib.anotherChatRes("status", "global")
+  status.add(1)
+
+⚜️ Joined ⚜️
+
+let stat = Bot.getProperty(""+user.telegramid+"");
+
+if (stat=="ban"){
+Bot.sendMessage("*You're Ban From Using The Bot ❌*");
+}else{
+
+let channel = "@TXTPayouts";
+let id = user.telegramid
+Api.getChatMember({ 
+chat_id : channel,
+user_id : id,
+on_result :"check"})
+}
+
+check
+
+var user = options.result.status;
+User.setProperty("status" , user, "string");
+if (user=="member" | user =="administrator" | user=="creator"){
+Bot.runCommand("join2")
+User.addToGroup("user")
+}
+
+if (user=="left"){
+Bot.sendMessage("*❌ Must join all channel*")
+}
+
+join2
+
+let stat = Bot.getProperty(""+user.telegramid+"");
+
+if (stat=="ban"){
+Bot.sendMessage("*You're Ban From Using The Bot ❌*");
+}else{
+
+let channel = "@TricksXTech";
+let id = user.telegramid
+Api.getChatMember({ 
+chat_id : channel,
+user_id : id,
+on_result :"check2"})
+}
+
+check2
+
+var user = options.result.status;
+User.setProperty("status" , user, "string");
+if (user=="member" | user =="administrator" | user=="creator"){
+Bot.runCommand("join3")
+User.addToGroup("user")
+}
+
+if (user=="left"){
+Bot.sendMessage("*❌ Must join all channel*")
+}
+
+join3
+
+let stat = Bot.getProperty(""+user.telegramid+"");
+
+if (stat=="ban"){
+Bot.sendMessage("*You're Ban From Using The Bot ❌*");
+}else{
+
+let channel = "@Tricks_X_Tech";
+let id = user.telegramid
+Api.getChatMember({ 
+chat_id : channel,
+user_id : id,
+on_result :"check3"})
+}
+
+check3
+
+var user = options.result.status;
+User.setProperty("status" , user, "string");
+if (user=="member" | user =="administrator" | user=="creator"){
+Bot.runCommand("join4")
+User.addToGroup("user")
+}
+
+if (user=="left"){
+Bot.sendMessage("*❌ Must join all channel*")
+}
+
+join4
+
+let stat = Bot.getProperty(""+user.telegramid+"");
+
+if (stat=="ban"){
+Bot.sendMessage("*You're Ban From Using The Bot ❌*");
+}else{
+
+let channel = "@TXTPayouts";
+let id = user.telegramid
+Api.getChatMember({ 
+chat_id : channel,
+user_id : id,
+on_result :"check4"})
+}
+
+check4
+
+var user = options.result.status;
+User.setProperty("status" , user, "string");
+if (user=="member" | user =="administrator" | user=="creator"){
+Bot.runCommand("main_menu")
+User.addToGroup("user")
+}
+
+if (user=="left"){
+Bot.sendMessage("*❌ Must join all channel*")
+}
+
+main_menu
+
+var user = User.getProperty("status");
+if (user=="member" | user =="administrator" | user=="creator"){
+var balance = Libs.ResourcesLib.userRes("balance");
+var withdrawn = Libs.ResourcesLib.userRes("withdrawn");
+var ref = Libs.ResourcesLib.userRes("referral");
+var msgid = User.getProperty("msgid")
+Api.deleteMessage({
+message_id : msgid
+})
+Bot.sendKeyboard("🆔 Account Balance,\n🙌🏻 Referrals,🎁 Daily Bonus,➖ Withdraw\n📩 Update Coinbase Email\n📊Statistics,📞Support","*Welcome to Bot*")
+}
+Bot.runCommand("ref")
+
+ref
+
+function canRun(){
+  var last_run_a = User.getProperty("last_run_a");
+  if(!last_run_a){ return true }
+   return
+  return true;
+ }
+
+if(!canRun()){ return }
+User.setProperty("last_run_a", Date.now(), "integer");
+var referrer = Libs.ReferralLib.currentUser.attractedByUser()
+var bonus = 0.00000001
+if (referrer) {
+  var referrerRes = Libs.ResourcesLib.anotherUserRes(
+    "balance",
+    referrer.telegramid
+  )
+  referrerRes.add(bonus)
+  var refcom = Libs.ResourcesLib.anotherUserRes("refcom", referrer.telegramid)
+  refcom.add(bonus)
+  Bot.sendMessageToChatWithId(referrer.telegramid, "*+0.00000001 BTC*")
+} else {
+  Bot.sendMessage()
+}
+
+🆔 Account Balance
+
+var balance = Libs.ResourcesLib.userRes("balance")
+var lib = Libs.ReferralLib
+var refList = lib.currentUser.refList.get();
+Bot.sendMessage("*🤴 User : "+user.first_name+"\n\n💰 Balance : "+balance.value().toFixed(9)+" BTC\n\n⚜️Refer And Earn More*")
+
+🙌🏻 Referrals
+
+let stat = Bot.getProperty(""+user.telegramid+"");
+
+if (stat=="ban"){
+Bot.sendMessage("*You're Ban*");
+}else{
+
+let res = Libs.ResourcesLib.userRes("referral");
+let reflink=Libs.ReferralLib.currentUser.getRefLink("Your Bot Link like @TricksXTech","Bot");
+let lib = Libs.ReferralLib
+var refList = lib.currentUser.refList.get();
+Bot.sendMessage("*⏯️ Total Invites : "+refList.length+" Users\n\n⛔ Per Referral 0.00000001 BTC\n\n🔗 Referral Link ⬇️\n"+reflink+"*");
+
+}
+
+Enter Your Bot Link without @ otherwise Your Bot will Show Error
+
+🎁 Daily Bonus
+
+function canRun(){
+  var last_run_at = User.getProperty("last_run_at");
+  if(!last_run_at){ return true }
+  
+  var minutes = (Date.now() - last_run_at) /1000/60;
+  
+ var minutes_in_day = 24 * 60
+          var next = minutes_in_day - minutes
+          var wait_hours = Math.floor(next / 60)
+          next -= wait_hours * 60
+          var wait_minutes = Math.floor(next)
+          var seconds = Math.floor((next - wait_minutes) * 60)
+          if (minutes < minutes_in_day) {
+   Bot.sendMessage("*📛 You have already received a bonus Today\n\n▶️ Come Back After ⏳ "+wait_hours+" h "+wait_minutes+" m " 
+ + seconds+ " s*" );
+   return
+ }
+  return true;
+ }
+
+if(!canRun()){ return }
+User.setProperty("last_run_at", Date.now(), "integer");
+
+let balance = Libs.ResourcesLib.userRes("balance")
+balance.add(0.0000000050)
+Bot.sendMessage(
+  "*🎁 Congrats , you Received 0.0000000050 BTC*"
+)
+
+Command 
+
+📩 Update Coinbase Email
+
+
+In answer 
+
+_Send Your Coinbase Email_
+
+
+Wait For Answer On
+
+
+BJ's 
+
+
+function validateEmail(email) {
+
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(String(email).toLowerCase());
+
+}
+
+if(validateEmail(message)){
+
+User.setProperty("email",message,"string")
+
+Bot.sendKeyboard("📩 Update Coinbase Email,\n🔙BACK","*Successfully Your New Email Added*\n\n\nNew Email : " +message+ "\n\n🔻 If You Want To Update Your Email Click On *📩 Update Coinbase Email*");
+
+}else{
+
+Bot.sendKeyboard("📩 Update Coinbase Email,\n🔙BACK","❌ Wrong Email.\n\n*Your Email Not validate*");
+
+}
+
+🔙BACK
+
+Bot.runCommand("main_menu")
+
+Command
+
+➖ Withdraw
+
+In answer
+
+_Enter Your Amount_
+
+Wait for answer on
+
+BJ's 
+
+var balance = Libs.ResourcesLib.userRes("balance");
+
+var amount = parseFloat(message)
+
+var email = User.getProperty("email");
+
+if (amount>balance.value()){
+
+Bot.sendKeyboard("🔙BACK","💰 Your Balance : "+(balance.value()).toFixed(10)+" *BTC*\n\n❌ You Can Not Withdraw Out Of Your Balance");
+
+return
+
+}
+
+if (amount<0.00000001){
+
+Bot.sendKeyboard("🔙BACK","💰 Your Balance : "+(balance.value()).toFixed(10)+" *BTC*\n\n❌ To withdraw, you have to input at least 0.00000001 *BTC*");
+
+return
+
+}
+
+if (balance.value()<0.00000001){
+
+Bot.sendKeyboard("🔙BACK","💰 *Your* *Balance* : "+(balance.value()).toFixed(8)+" *BTC*\n\n❌ To withdraw, you need at least 0.00000001 *BTC*");
+
+return
+
+}
+
+if (!email){
+
+Bot.sendKeyboard("🔙BACK","You did not set any email address click on Set Email Address for setup your Email address");
+
+return
+
+}
+
+var userPayment = Libs.ResourcesLib.anotherChatRes("userpayment", "global")
+userPayment.add(+message)
+  var user_link = Libs.commonLib.getLinkFor(user)
+  var withdrawn = Bot.getProperty("totalWithdrawn")
+  withdrawn = parseFloat(withdrawn)
+
+var userPayment = Libs.ResourcesLib.anotherChatRes("totalPayment", "global")
+  userPayment.add(+message)
+  var balance = Libs.ResourcesLib.userRes("balance")
+  if (isNaN(message)) 
+
+var history = User.getProperty("history")
+var time = Libs.DateTimeFormat.format(new Date(), "dd/m/yyyy h:M:s T") + "M"
+var amount = message
+  if (history == undefined) {
+    var newh =
+      "-------------------------------------------------------------------------------------\n" +
+      "✅ Withdraw Amount : " +
+      amount +
+      "LTC" +
+      "\n⚕DATE " +
+      time
+    User.setProperty("history", newh, "string")
+  } else {
+    var nwh =
+      "-------------------------------------------------------------@"+bot.name+"------------------------" +
+      "\n✅ Withdraw Amount : " +
+      amount +
+      "LTC" +
+      "\n⚕ DATE " +
+      time
+    var toal = nwh + history
+    User.setProperty("history", toal, "string")
+  }
+Bot.sendMessage("*✅ Withdrawal sent\n\n💳 Transaction Details :\n 💰Amount : "+data.message+" BTC\n💼 wallet : "+email+"*")
+
+balance.add(-amount);
+
+Libs.Coinbase.apiCall({
+
+ method: "POST",  
+
+ path: "accounts/your account id/transactions",
+
+ body: {
+
+ "type": "send",
+
+ "to": email,
+
+ "amount": message,
+
+ "currency": "BTC"
+
+},
+onSuccess: "/onSuccess",
+
+ onError: "/onApiError"
+
+})
+
+/onSuccess
+
+var result = options.result.data
+
+var amountsent = result.amount.amount.slice(1,500)
+
+var email = result.to.email
+
+Bot.sendInlineKeyboard([{title: "View Transaction", url: "@TXTPayouts" }],"💸 *Payment Successfully Send. Check Your Coinbase.*\n\n*Amount :*"+amountsent+" *BTC*\n*Email :*"+email);
+
+var tex = "✅ *New* *Withdrawal* *Send*\n\n\❄️*Status*: *Paid\n🕳️ User ID = " +
+          user.telegramid +
+          "\n🗣 *User* : @" +user.username+ "\n🌐 *Coinbase* *Email*: "+email+"\n💵 *Amount* : " +amountsent+ " *BTC*\n🤖 *Bot* *Link*: @" +
+          bot.name +
+          "*";
+
+Api.sendMessage({chat_id:"@TXTPayouts",text:(""+tex+""),parse_mode:"markdown"})
+
+Command
+
+
+📞Support
+
+In answer
+
+_💬 How Can I Help You ?_
+
+
+Wait for answer on
+
+
+var admin_id = "1109004518"
+//you may get it via Bot.sendMessage(user.telegramid)
+
+var msg_count = Bot.getProperty("support_msg_count",0)
+
+var msg_seen = Bot.getProperty("support_msg_seen",0)
+
+var msg_details = Bot.getProperty("support_msg_details",{})
+
+if(!msg_details[msg_count+1]){msg_details[msg_count+1] = {}}
+
+
+if(!user.last_name){user.last_name = " "}
+msg_details[msg_count+1].message = message 
+msg_details[msg_count+1].userId = user.telegramid
+msg_details[msg_count+1].name = user.first_name
+msg_details[msg_count+1].last_name = user.last_name
+msg_details[msg_count+1].message_id = request.message_id
+
+Bot.sendMessage("Your message has been send to admin\nThey will reply u as soon as possible")
+
+var text = "New support Message has came \n\nTotal pending message are " + [msg_count-msg_seen+1]
+
+Bot.sendMessageToChatWithId(admin_id, text)
+
+Bot.setProperty("support_msg_count",msg_count+1,"integer")
+Bot.setProperty("support_msg_details",msg_details,"json")
+
+Use This Bot @UserIdFinder_robot To Find Your ID
+
+/check_msg
+
+var admin_id = "1109004518"
+//you may get it via Bot.sendMessage(user.telegramid)
+
+var msg_count = Bot.getProperty("support_msg_count",0)
+
+var msg_seen = Bot.getProperty("support_msg_seen",0)
+
+var msg_details = Bot.getProperty("support_msg_details",{})
+
+
+if(user.telegramid != admin_id){return}
+
+if(msg_count-msg_seen < 1){
+Bot.sendMessage("You have no any message pending")
+return}
+
+var msg = "Here are pending support message sent by users\n\n"
+for(var i=[msg_seen+1];i<[msg_count+1];i++){
+
+msg += "*User* : [" + msg_details[i].name + " " + msg_details[i].last_name + "](tg://user?id=" + msg_details[i].userId + ")" + "\n*User Id* : " + msg_details[i].userId + "\n*Message* :\n" + msg_details[i].message + "\n\n Reply it : /reply " + i + "\n\n\n"
+}
+
+Bot.setProperty("support_msg_seen",msg_count,"integer")
+Bot.sendMessage(msg)
+
+Use This Bot @UserIdFinder_robot To Find Your ID
+
+/reply
+
+var admin_id = "1109004518"
+//you may get it via Bot.sendMessage(user.telegramid)
+
+var msg_details = Bot.getProperty("support_msg_details",{})
+
+if(user.telegramid!=admin_id){return}
+if(!params){return}
+
+var user_link = "[" + msg_details[params].name + " " + msg_details[params].last_name + "](tg://user?id=" + msg_details[params].userId +")"
+
+Bot.sendMessage("Please enter the reply to user " + user_link )
+
+Bot.run({
+command: "/adminreply",
+options: {user_link: user_link,userId: msg_details[params].userId,message_id: msg_details[params].message_id}
+})
+
+Use This Bot @UserIdFinder_robot To Find Your ID
+
+Command 
+
+/adminreply
+
+
+In answer 
+
+
+_💬 How Can I Help You ?_
+
+Wait for answer on
+
+
+BJ's
+
+
+var admin_id = "1109004518"
+//you may get it via Bot.sendMessage(user.telegramid)
+
+if(user.telegramid!=admin_id){return}
+
+var option = {reply_to_message_id: options.message_id}
+Bot.sendMessageToChatWithId(options.userId,"Reply from Admin:-\n" + message, option)
+
+Bot.sendMessage("Message has been sent to " + options.user_link)
+
+Bot.runCommand("main_menu")
